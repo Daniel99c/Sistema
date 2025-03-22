@@ -46,6 +46,9 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        $user->assignRole('Egresado');
+        $user->update(['role' => 'Egresado']);
+
         return to_route('dashboard');
     }
 }
