@@ -11,12 +11,16 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 
 class UsersController extends Controller
 {
     public function index():Response
     {
-        $users = User::select('id','name','email','role','created_at')->latest()->paginate(10);
+        // Ejecutar reordenamiento simple de IDs
+        $this->reindexUserIds();
+        
+        $users = User::select('id','name','email','role','created_at')->orderBy('id', 'asc')->paginate(10);
         return Inertia::render('users',[
             'users' => $users,
         ]);
@@ -135,6 +139,47 @@ class UsersController extends Controller
                 ['success' => false, 'message' => 'Error al eliminar el usuario: ' . $e->getMessage()],
                 500
             );
+        }
+    }
+    
+    /**
+     * Método simple para reindexar los IDs de usuario en secuencia
+     * Se ejecuta solo al cargar la página de índice
+     */
+    private function reindexUserIds()
+    {
+        try {
+            // Comprobar si hay huecos en los IDs
+            $maxId = DB::table('users')->max('id');
+            $count = DB::table('users')->count();
+            
+            // Solo reindexar si hay huecos (cuando el máximo ID es mayor que el conteo)
+            if ($maxId > $count) {
+                DB::statement('SET @counter = 0;');
+                DB::statement('UPDATE users SET id = (@counter:=@counter+1) ORDER BY id;');
+                DB::statement('ALTER TABLE users AUTO_INCREMENT = ' . ($count + 1) . ';');
+                
+                // Actualizar las referencias en la tabla model_has_roles si existe
+                if (Schema::hasTable('model_has_roles')) {
+                    // Crear tabla temporal para el mapeo
+                    DB::statement('CREATE TEMPORARY TABLE IF NOT EXISTS temp_roles_map AS 
+                        SELECT model_id, ROW_NUMBER() OVER (ORDER BY model_id) as new_id 
+                        FROM model_has_roles 
+                        WHERE model_type = "App\\\\Models\\\\User";');
+                    
+                    // Actualizar IDs en model_has_roles
+                    DB::statement('UPDATE model_has_roles r 
+                        JOIN temp_roles_map m ON r.model_id = m.model_id 
+                        SET r.model_id = m.new_id 
+                        WHERE r.model_type = "App\\\\Models\\\\User";');
+                    
+                    // Eliminar tabla temporal
+                    DB::statement('DROP TEMPORARY TABLE IF EXISTS temp_roles_map;');
+                }
+            }
+        } catch (Exception $e) {
+            // Si ocurre un error, solo lo registramos pero no interrumpimos la carga de la página
+            Log::error('Error al reindexar IDs de usuarios: ' . $e->getMessage());
         }
     }
 }
