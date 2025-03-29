@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\BasicInformationController;
 use App\Http\Middleware\RoleAccessMiddleware;
 use Illuminate\Support\Facades\Redirect;
 
@@ -30,9 +31,9 @@ Route::middleware(RoleAccessMiddleware::class)->group(function () {
             return Inertia::render('news');
         })->name('news');
 
-        Route::get('basicInformation', function () {
-            return Inertia::render('basicInformation');
-        })->name('basicInformation');
+        // Ruta para información básica
+        Route::get('basicInformation', [BasicInformationController::class, 'index'])->name('basicInformation');
+        Route::post('basicInformation', [BasicInformationController::class, 'store'])->name('basicInformation.store');
 
         // Rutas de usuarios 
         Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
