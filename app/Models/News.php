@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class News extends Model
 {
@@ -28,5 +29,13 @@ class News extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Devuelve la URL pública de la imagen si existe.
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        return $this->image ? Storage::url($this->image) : null;
     }
 }
