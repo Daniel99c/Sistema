@@ -1,40 +1,51 @@
+import { usePage } from '@inertiajs/react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import {UsersRound, BookOpen, Folder, LayoutDashboard } from 'lucide-react';
+import { UsersRound, Folder, LayoutDashboard, Newspaper} from 'lucide-react';
 import AppLogo from './app-logo';
+import { PageProps as InertiaPageProps } from '@inertiajs/core';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutDashboard,
-    },
+// ✅ Extender de Inertia.PageProps para evitar el error
+interface PageProps extends InertiaPageProps {
+    auth?: {
+        user?: {
+            roles?: string[];
+        };
+    };
+}
 
-    {
-        title: 'Users',
-        href: '/users',
-        icon: UsersRound,
-    },
-];
+export function AppSidebar() { 
+    // ✅ Obtener datos del usuario desde Inertia.js
+    const { props } = usePage<PageProps>(); 
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
-    },
-];
+    const userRoles = props.auth?.user?.roles ?? []; // Garantiza que siempre sea un array
 
-export function AppSidebar() {
+    // Función para determinar el rol principal (el primer rol)
+    const userRole = userRoles.length > 0 ? userRoles[0] : 'Egresado';
+
+    // Configuración del sidebar según el rol
+    const navItemsByRole: Record<string, NavItem[]> = {
+        Administrador: [
+            { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+            { title: 'Users', href: '/users', icon: UsersRound },
+        ],
+        Coordinador: [
+            { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+            { title: 'News', href: '/news', icon: Newspaper },
+        ],
+        Egresado: [
+            { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+            { title: 'Basic Information', href: '/basicInformation', icon: Newspaper }
+
+        ],
+    };
+
+    const mainNavItems = navItemsByRole[userRole] || navItemsByRole['Egresado'];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -54,7 +65,7 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
+                <NavFooter items={[]} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>
