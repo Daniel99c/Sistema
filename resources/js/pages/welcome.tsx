@@ -85,7 +85,7 @@ export default function Welcome() {
                                         </Link>
                                         <Link
                                             href={route('register')}
-                                            className="inline-block rounded-md border border-[#0057b7] bg-[#0057b7] px-4 py-1.5 text-sm font-medium text-white transition-all hover:bg-[#0046a1] hover:border-[#0046a1] dark:border-[#2196f3] dark:bg-[#2196f3] dark:hover:bg-[#1976d2] dark:hover:border-[#1976d2]"
+                                            className="inline-block rounded-md border border-[#ff5252] bg-[#ff5252] px-4 py-1.5 text-sm font-medium text-white transition-all hover:bg-[#e53935] hover:border-[#e53935] dark:border-[#ff5252] dark:bg-[#ff5252] dark:hover:bg-[#e53935] dark:hover:border-[#e53935]"
                                         >
                                             Registrar
                                         </Link>
@@ -99,7 +99,7 @@ export default function Welcome() {
                     <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row shadow-lg rounded-lg overflow-hidden">
                         <div className="flex-1 bg-white p-5 pb-6 text-[14px] leading-[20px] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:bg-[#161615] dark:text-[#EDEDEC] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] relative bg-gradient-to-br from-white to-[#f0f8ff] dark:from-[#161615] dark:to-[#0d2548]/70">
                             {/* Elemento decorativo - esquina */}
-                            <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-[#0057b7] dark:border-[#2196f3] rounded-tl-lg"></div>
+                            <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-[#ff5252] dark:border-[#ff5252] rounded-tl-lg"></div>
                             
                             <div className="relative z-10 mt-3 ml-3">
                                 <div className="relative mb-2">
@@ -167,7 +167,7 @@ export default function Welcome() {
                                 {/* Tarjeta de programa */}
                                 <div className="mt-4 p-4 bg-white dark:bg-[#161615]/70 rounded-lg border border-[#d4e6f9] dark:border-[#1a4b91] shadow-sm hover:shadow-md transition-all">
                                     <div className="flex items-center mb-3">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#0057b7] dark:text-[#2196f3]">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#ff5252] dark:text-[#ff5252]">
                                             <path d="M12 6.25278V19.2528M12 6.25278C10.8321 5.47686 9.24649 5 7.5 5C5.75351 5 4.16789 5.47686 3 6.25278V19.2528C4.16789 18.4769 5.75351 18 7.5 18C9.24649 18 10.8321 18.4769 12 19.2528M12 6.25278C13.1679 5.47686 14.7535 5 16.5 5C18.2465 5 19.8321 5.47686 21 6.25278V19.2528C19.8321 18.4769 18.2465 18 16.5 18C14.7535 18 13.1679 18.4769 12 19.2528" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                         </svg>
                                         <span className="ml-2 font-medium text-sm text-[#0d47a1] dark:text-white">Información del Programa</span>
