@@ -21,12 +21,19 @@ Route::middleware(RoleAccessMiddleware::class)->group(function () {
     Route::get('/', function () {
         return Inertia::render('welcome');
     })->name('home');
+});
 
     Route::middleware(['auth', 'verified'])->group(function () {
         // Rutas existentes...
         Route::get('dashboard', function () {
             return Inertia::render('dashboard');
         })->name('dashboard');
+    
+        Route::middleware(['auth', 'verified'])->group(function () {
+            // Rutas existentes...
+            Route::get('academicInformation', function () {
+                return Inertia::render('academicInformation');
+            })->name('academicInformation');
 
         // Ruta para información básica
         Route::get('basicInformation', [BasicInformationController::class, 'index'])->name('basicInformation');

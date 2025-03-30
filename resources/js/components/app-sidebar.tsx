@@ -5,7 +5,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { UsersRound, Folder, LayoutDashboard, Newspaper} from 'lucide-react';
+import { BookMarked, GraduationCap , UsersRound, Folder, LayoutDashboard, Newspaper} from 'lucide-react';
 import AppLogo from './app-logo';
 import { PageProps as InertiaPageProps } from '@inertiajs/core';
 
@@ -39,7 +39,8 @@ export function AppSidebar() {
         ],
         Egresado: [
             { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-            { title: 'Basic Information', href: '/basicInformation', icon: Newspaper }
+            { title: 'Basic Information', href: '/basicInformation', icon: BookMarked },
+            { title: 'Academic information', href: '/academicInformation', icon: GraduationCap }
 
         ],
     };
