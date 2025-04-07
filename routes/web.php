@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\BasicInformationController;
 use App\Http\Controllers\AcademicInformationController;
+use App\Http\Controllers\EmploymentInformationController;
 use App\Http\Middleware\RoleAccessMiddleware;
 use Illuminate\Support\Facades\Redirect;
 
@@ -31,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
-    
+
     // Ruta para información básica
     Route::get('basicInformation', [BasicInformationController::class, 'index'])->name('basicInformation');
     Route::post('basicInformation', [BasicInformationController::class, 'store'])->name('basicInformation.store');
@@ -44,6 +45,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('academicInformation/destroyMultiple', [AcademicInformationController::class, 'destroyMultiple'])->name('academicInformation.destroyMultiple');
     Route::get('academicInformation/certificate/{id}', [AcademicInformationController::class, 'downloadCertificate'])->name('academicInformation.certificate');
     
+    // Rutas para informacion laboral
+    Route::get('employmentInformation', [EmploymentInformationController::class, 'index'])->name('employmentInformation');
+    Route::post('employmentInformation', [EmploymentInformationController::class, 'store'])->name('employmentInformation.store');
+    Route::put('employmentInformation/{id}', [EmploymentInformationController::class, 'update'])->name('employmentInformation.update');
+    Route::delete('employmentInformation/{id}', [EmploymentInformationController::class, 'destroy'])->name('employmentInformation.destroy');
+    Route::post('employmentInformation/destroyMultiple', [EmploymentInformationController::class, 'destroyMultiple'])->name('employmentInformation.destroyMultiple');
+
     // Rutas de usuarios
     Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
