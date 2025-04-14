@@ -63,9 +63,31 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(EmploymentInformation::class);
     }
-
+    
     public function administratorCoordinatorProfile()
     {
-    return $this->hasOne(myProfile::class);
+        return $this->hasOne(myProfile::class);
+    }
+    
+    /**
+     * Relación con las ubicaciones del usuario
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
+    
+    /**
+     * Obtener la última ubicación del usuario
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function latestLocation()
+    {
+        return $this->hasOne(Location::class)->latest();
     }
 }
+
+

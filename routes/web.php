@@ -10,6 +10,7 @@ use App\Http\Controllers\EmploymentInformationController;
 use App\Http\Controllers\ProfileController; // Añadir esta línea
 use App\Http\Middleware\RoleAccessMiddleware;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\LocationController;
 
 // Redirigir rutas de Administrador y Coordinador directamente al login
 Route::get('Administrador', function () {
@@ -31,7 +32,12 @@ Route::middleware(RoleAccessMiddleware::class)->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     // Dashboard
     Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
+        // Pasar la bandera isCoordinator directamente al componente
+        $user = auth()->user();
+        return Inertia::render('dashboard', [
+            'userName' => $user->name,
+            'isCoordinator' => $user->role === 'Coordinador' // Ajusta según tu nomenclatura de roles
+        ]);
     })->name('dashboard');
 
     // Ruta para información básica
@@ -72,12 +78,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/{id}', [NewsController::class, 'update'])->name('update');
         Route::delete('/{id}', [NewsController::class, 'destroy'])->name('destroy');
     });
+
+    // INICIO - RUTAS PARA EL SISTEMA DE UBICACIONES
+    
+    // Ruta para guardar la ubicación (solo para egresados)
+    Route::post('/location', [LocationController::class, 'store'])
+        ->middleware('role:Egresado'); // Ajusta el nombre del middleware según tu implementación
+    
+    // Ruta para obtener la ubicación del usuario actual
+    Route::get('/user/location', [LocationController::class, 'getUserLocation']);
+    
+    // Ruta para obtener todas las ubicaciones (solo para coordinadores)
+    Route::get('/locations', [LocationController::class, 'index'])
+        ->middleware('role:Coordinador'); // Ajusta el nombre del middleware según tu implementación
+
+    // Ruta para la vista del mapa (solo para coordinadores)
+    Route::get('/map', function () {
+        return Inertia::render('MapView');
+    })->middleware('role:Coordinador'); // Ajusta el nombre del middleware según tu implementación
+    
+    // FIN - RUTAS PARA EL SISTEMA DE UBICACIONES
     
     // Rutas API
     Route::prefix('api')->group(function () {
         Route::get('news', [NewsController::class, 'getAll']);
         Route::get('news/{id}', [NewsController::class, 'show']);
         Route::get('academicInformation', [AcademicInformationController::class, 'getAll']);
+        
+        // API para ubicaciones (opcional si quieres mantener separada la API)
+        Route::get('locations', [LocationController::class, 'getLocationsApi'])
+            ->middleware('role:Coordinador');
     });
 });
 
