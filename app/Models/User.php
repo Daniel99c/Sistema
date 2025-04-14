@@ -63,4 +63,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(EmploymentInformation::class);
     }
+
+    public function administratorCoordinatorProfile()
+    {
+    return $this->hasOne(myProfile::class);
+    }
 }

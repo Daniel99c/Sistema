@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\BasicInformationController;
 use App\Http\Controllers\AcademicInformationController;
 use App\Http\Controllers\EmploymentInformationController;
+use App\Http\Controllers\ProfileController; // Añadir esta línea
 use App\Http\Middleware\RoleAccessMiddleware;
 use Illuminate\Support\Facades\Redirect;
 
@@ -36,6 +37,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Ruta para información básica
     Route::get('basicInformation', [BasicInformationController::class, 'index'])->name('basicInformation');
     Route::post('basicInformation', [BasicInformationController::class, 'store'])->name('basicInformation.store');
+    
+    // Rutas para el perfil de administrador/coordinador (NUEVAS RUTAS)
+    Route::get('myProfile', [ProfileController::class, 'index'])->name('myProfile');
+    Route::post('myProfile', [ProfileController::class, 'store'])->name('myProfile.store');
     
     // Rutas para información académica
     Route::get('academicInformation', [AcademicInformationController::class, 'index'])->name('academicInformation');
