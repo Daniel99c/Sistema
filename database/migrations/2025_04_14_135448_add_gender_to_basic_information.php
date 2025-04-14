@@ -15,16 +15,24 @@ return new class extends Migration
     {
         // Verificar si la tabla existe
         if (Schema::hasTable('basic_information')) {
-            // Verificar los campos institution y career
+            // Verificar y añadir los campos necesarios
             Schema::table('basic_information', function (Blueprint $table) {
+                // Verificar/añadir campo institution
                 if (!Schema::hasColumn('basic_information', 'institution')) {
                     $table->string('institution')->nullable()->after('graduation_date');
                     Log::info("Columna 'institution' agregada a basic_information");
                 }
                 
+                // Verificar/añadir campo career
                 if (!Schema::hasColumn('basic_information', 'career')) {
                     $table->string('career')->nullable()->after('institution');
                     Log::info("Columna 'career' agregada a basic_information");
+                }
+                
+                // Verificar/añadir el nuevo campo gender (sexo)
+                if (!Schema::hasColumn('basic_information', 'gender')) {
+                    $table->string('gender')->nullable()->after('document_number');
+                    Log::info("Columna 'gender' agregada a basic_information");
                 }
             });
             
@@ -35,6 +43,10 @@ return new class extends Migration
                 
                 DB::statement('ALTER TABLE basic_information MODIFY career VARCHAR(255) NULL');
                 Log::info("Definición de columna 'career' ajustada para permitir NULL");
+                
+                // También para gender
+                DB::statement('ALTER TABLE basic_information MODIFY gender VARCHAR(255) NULL');
+                Log::info("Definición de columna 'gender' ajustada para permitir NULL");
             } catch (\Exception $e) {
                 Log::error("Error al modificar las columnas: " . $e->getMessage());
             }
@@ -50,7 +62,12 @@ return new class extends Migration
                     ->where('career', '')
                     ->update(['career' => null]);
                 
-                Log::info("Datos corregidos para institution y career");
+                // También para gender
+                DB::table('basic_information')
+                    ->where('gender', '')
+                    ->update(['gender' => null]);
+                
+                Log::info("Datos corregidos para institution, career y gender");
             } catch (\Exception $e) {
                 Log::error("Error al corregir datos: " . $e->getMessage());
             }
@@ -61,7 +78,7 @@ return new class extends Migration
                 Log::info("Directorio para fotos de perfil creado");
             }
         } else {
-            // Si la tabla no existe, la creamos completa
+            // Si la tabla no existe, la creamos completa con todos los campos necesarios
             Schema::create('basic_information', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -69,6 +86,7 @@ return new class extends Migration
                 $table->string('last_name');
                 $table->string('document_type');
                 $table->string('document_number');
+                $table->string('gender')->nullable(); // Campo de sexo
                 $table->string('email')->nullable(); // Email del usuario
                 $table->string('profile_photo')->nullable(); // Columna para la foto de perfil
                 $table->date('graduation_date')->nullable();
@@ -87,7 +105,7 @@ return new class extends Migration
                 $table->unique(['user_id', 'document_type', 'document_number']);
             });
             
-            Log::info("Tabla 'basic_information' creada desde cero");
+            Log::info("Tabla 'basic_information' creada desde cero con todos los campos necesarios");
         }
     }
 

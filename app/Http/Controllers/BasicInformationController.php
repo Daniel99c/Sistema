@@ -83,19 +83,29 @@ class BasicInformationController extends Controller
      */
     public function store(Request $request)
     {
-        // El resto del código permanece igual
         // Verificar la estructura de la tabla para evitar errores
         $this->verifyTableStructure();
         
         try {
-            // Validar las entradas
+            // Validar las entradas con un mensaje de error personalizado para el tamaño de la foto
             $validated = $request->validate([
                 'first_name' => 'required|string|max:255',
                 'last_name' => 'required|string|max:255',
                 'document_type' => 'required|string|max:50',
                 'document_number' => 'required|string|max:50',
+                'gender' => 'required|string|max:50',
                 'email' => 'nullable|email|max:255',
-                'profile_photo' => 'nullable|image|max:2048', // Validar archivo de imagen
+                'profile_photo' => [
+                    'nullable',
+                    'image',
+                    'max:2048', // 2MB en kilobytes
+                    function ($attribute, $value, $fail) {
+                        if ($value && $value->getSize() > 2048 * 1024) {
+                            $fail('El campo foto de perfil no debe ser mayor a 2048 kilobytes.');
+                        }
+                    },
+                ],
+                'profile_photo_path' => 'nullable|string',
                 'graduation_date' => 'nullable|date',
                 'institution' => 'present|nullable|string|max:255',
                 'career' => 'present|nullable|string|max:255',
@@ -105,6 +115,9 @@ class BasicInformationController extends Controller
                 'department' => 'nullable|string|max:100',
                 'country' => 'nullable|string|max:100',
                 'additional_info' => 'nullable|string',
+            ], [
+                'profile_photo.max' => 'La foto de perfil no debe ser mayor a 2048 kilobytes (2MB).',
+                'gender.required' => 'El campo sexo es obligatorio.',
             ]);
             
             $user = Auth::user();
@@ -120,14 +133,14 @@ class BasicInformationController extends Controller
             // Eliminar campos que no existen en la tabla
             $columns = Schema::getColumnListing('basic_information');
             foreach (array_keys($validated) as $field) {
-                if (!in_array($field, $columns) && $field !== 'profile_photo') {
+                if (!in_array($field, $columns) && $field !== 'profile_photo' && $field !== 'profile_photo_path') {
                     unset($validated[$field]);
                 }
             }
             
             // Asegurar que ningún campo se convierte a NULL si está vacío
             foreach ($validated as $key => $value) {
-                if ($value === null && $key !== 'graduation_date' && $key !== 'profile_photo') {
+                if ($value === null && $key !== 'graduation_date' && $key !== 'profile_photo' && $key !== 'profile_photo_path') {
                     $validated[$key] = '';
                 }
             }
@@ -149,7 +162,7 @@ class BasicInformationController extends Controller
             
             // Procesar la foto de perfil si se ha subido
             if ($request->hasFile('profile_photo')) {
-                // Si hay una foto anterior, eliminarla
+                // Si hay una foto anterior, eliminarla (solo si estamos reemplazando)
                 if ($user->basicInformation && $user->basicInformation->profile_photo) {
                     try {
                         Storage::disk('public')->delete('profile_photos/' . $user->basicInformation->profile_photo);
@@ -163,23 +176,41 @@ class BasicInformationController extends Controller
                 
                 // Guardar la nueva foto
                 $file = $request->file('profile_photo');
+                
+                // Verificar el tamaño del archivo
+                if ($file->getSize() > 2048 * 1024) {
+                    return back()->withErrors([
+                        'profile_photo' => 'La foto de perfil no debe ser mayor a 2048 kilobytes (2MB).'
+                    ]);
+                }
+                
                 $filename = time() . '_' . $file->getClientOriginalName();
                 $file->storeAs('profile_photos', $filename, 'public');
                 
                 $validated['profile_photo'] = $filename;
                 Log::info("Foto guardada: " . $filename);
-            } elseif ($request->has('profile_photo') && $request->input('profile_photo') === null) {
-                // Si se envía explícitamente como nulo, eliminamos la foto
+            } elseif ($request->has('profile_photo') && $request->input('profile_photo') === null && empty($request->input('profile_photo_path'))) {
+                // Si se envía explícitamente como nulo y no hay ruta guardada, eliminamos la foto
                 if ($user->basicInformation && $user->basicInformation->profile_photo) {
                     Storage::disk('public')->delete('profile_photos/' . $user->basicInformation->profile_photo);
                 }
                 $validated['profile_photo'] = null;
             } else {
-                // Mantener la foto existente
-                if ($user->basicInformation && isset($user->basicInformation->profile_photo)) {
+                // Mantener la foto existente (usamos la ruta guardada o la foto actual)
+                $photoPath = $request->input('profile_photo_path');
+                if (!empty($photoPath)) {
+                    // Si tenemos una ruta guardada, la usamos
+                    $validated['profile_photo'] = $photoPath;
+                    Log::info("Manteniendo foto existente desde ruta: " . $photoPath);
+                } elseif ($user->basicInformation && $user->basicInformation->profile_photo) {
+                    // O usamos la foto actual si ya existe
                     $validated['profile_photo'] = $user->basicInformation->profile_photo;
+                    Log::info("Manteniendo foto existente: " . $user->basicInformation->profile_photo);
                 }
             }
+            
+            // Eliminar campos que no queremos guardar en la base de datos
+            unset($validated['profile_photo_path']);
             
             // Actualizar o crear la información básica
             $basicInfo = BasicInformation::updateOrCreate(
@@ -193,6 +224,7 @@ class BasicInformationController extends Controller
             Log::info("Carrera guardada: " . $basicInfo->career);
             Log::info("Nombres guardados: " . $basicInfo->first_name);
             Log::info("Apellidos guardados: " . $basicInfo->last_name);
+            Log::info("Sexo guardado: " . $basicInfo->gender);
             
             // También actualizar el nombre y apellido en la tabla de usuarios
             $user->update([
@@ -225,6 +257,7 @@ class BasicInformationController extends Controller
                 'profile_photo' => 'string',
                 'institution' => 'string',
                 'career' => 'string',
+                'gender' => 'string', // Campo de sexo
             ];
             
             foreach ($requiredColumns as $column => $type) {

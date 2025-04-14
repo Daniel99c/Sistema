@@ -21,6 +21,7 @@ class BasicInformation extends Model
         'last_name',
         'document_type',
         'document_number',
+        'gender', // Añadido campo de sexo
         'email',
         'profile_photo',
         'graduation_date',

@@ -39,7 +39,6 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
-
 const breadcrumbs = [
     { title: 'Dashboard', href: '/dashboard' },
     { title: 'Información Básica', href: '/basicInformation' },
@@ -92,7 +91,6 @@ const darkTheme = createTheme({
         },
     },
 });
-
 // Definición de las interfaces para los tipos
 interface UserData {
     first_name: string;
@@ -107,6 +105,7 @@ interface BasicInfo {
     email: string;
     document_type: string;
     document_number: string;
+    gender: string; // Campo de sexo
     profile_photo: string | null;
     graduation_date: string | null;
     institution: string | null;
@@ -126,7 +125,6 @@ interface Props {
     departments: string[];
     institutions: string[];
 }
-
 export default function BasicInformation({ userData, basicInfo, cities, departments, institutions }: Props) {
     // Usar los datos proporcionados desde el servidor
     const initialFirstName = basicInfo?.first_name || userData?.first_name || '';
@@ -147,7 +145,9 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
         email?: string | null; // Opcional solo para mostrar en la UI
         document_type: string;
         document_number: string;
+        gender: string; // Campo de sexo
         profile_photo: File | null;
+        profile_photo_path: string | null; // Para mantener la referencia a la foto existente
         graduation_date: string | null;
         institution: string | null;
         career: string | null;
@@ -159,14 +159,15 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
         additional_info: string | null;
         [key: string]: any; // Esta línea permite campos adicionales
     }
-
     const { data, setData, post, processing, errors, reset, wasSuccessful } = useForm<BasicInfoForm>({
         first_name: initialFirstName,
         last_name: initialLastName,
         email: initialEmail, // Solo para mostrar
         document_type: basicInfo?.document_type || '',
         document_number: basicInfo?.document_number || '',
+        gender: basicInfo?.gender || '', // Inicialización del campo de sexo
         profile_photo: null,
+        profile_photo_path: basicInfo?.profile_photo || null, // Guardamos la ruta de la foto actual
         graduation_date: basicInfo?.graduation_date || null,
         institution: basicInfo?.institution || '',
         career: basicInfo?.career || '',
@@ -184,7 +185,6 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
     const [alertSeverity, setAlertSeverity] = useState<'success' | 'error' | 'info' | 'warning'>('success');
     const [isLoading, setIsLoading] = useState(false);
     const [activeSection, setActiveSection] = useState('personal');
-
     // Actualizamos el estado cuando cambian las props
     useEffect(() => {
         if (userData || basicInfo) {
@@ -200,6 +200,7 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
                 ...prevData,
                 document_type: basicInfo.document_type || '',
                 document_number: basicInfo.document_number || '',
+                gender: basicInfo.gender || '', // Asignamos el valor del campo de sexo
                 graduation_date: basicInfo.graduation_date || null,
                 institution: basicInfo.institution || '',
                 career: basicInfo.career || '',
@@ -210,6 +211,7 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
                 department: basicInfo.department || '',
                 country: basicInfo.country || 'Colombia',
                 additional_info: basicInfo.additional_info || '',
+                profile_photo_path: basicInfo.profile_photo || null, // Guardamos la ruta de la foto
             }));
             
             if (basicInfo.profile_photo) {
@@ -247,7 +249,6 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
             setIsLoading(false);
         }
     }, [errors]);
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLoading(true);
@@ -255,7 +256,9 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
         // Registrar valores para depuración
         console.log("Enviando datos:", {
             institution: data.institution,
-            career: data.career
+            career: data.career,
+            gender: data.gender,
+            profile_photo_path: data.profile_photo_path
         });
         
         // Usar FormData para enviar archivos
@@ -299,7 +302,6 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
             reader.readAsDataURL(file);
         }
     };
-
     // Obtener las iniciales para el avatar
     const getInitials = () => {
         const firstName = data.first_name || '';
@@ -323,7 +325,8 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
             'first_name', 
             'last_name', 
             'document_type', 
-            'document_number'
+            'document_number',
+            'gender' // Añadimos el campo de sexo a los requeridos
         ];
         
         // Campos opcionales (tienen menor peso en el progreso)
@@ -388,7 +391,6 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
             return 'linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)';
         }
     };
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Información Básica" />
@@ -595,7 +597,6 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
                                 </Box>
                             </Card>
                         </Box>
-                        
                         {/* Contenido principal */}
                         <Box sx={{ flex: 1 }}>
                             <Paper 
@@ -707,6 +708,29 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
                                                     />
                                                 </Grid>
                                                 
+                                                {/* Campo de sexo */}
+                                                <Grid item xs={12} sm={6}>
+                                                    <FormControl fullWidth variant="outlined" error={!!errors.gender} required>
+                                                        <InputLabel id="gender-label">Sexo</InputLabel>
+                                                        <Select
+                                                            labelId="gender-label"
+                                                            value={data.gender}
+                                                            onChange={(e) => setData('gender', e.target.value)}
+                                                            label="Sexo"
+                                                        >
+                                                            <MenuItem value=""><em>Seleccionar</em></MenuItem>
+                                                            <MenuItem value="Masculino">Masculino</MenuItem>
+                                                            <MenuItem value="Femenino">Femenino</MenuItem>
+                                                            <MenuItem value="No especificar">Prefiero no contestar</MenuItem>
+                                                        </Select>
+                                                        {errors.gender && (
+                                                            <Typography variant="caption" color="error">
+                                                                {errors.gender}
+                                                            </Typography>
+                                                        )}
+                                                    </FormControl>
+                                                </Grid>
+                                                
                                                 <Grid item xs={12} sm={6}>
                                                     <TextField
                                                         label="Teléfono"
@@ -718,6 +742,13 @@ export default function BasicInformation({ userData, basicInfo, cities, departme
                                                         helperText={errors.phone}
                                                     />
                                                 </Grid>
+                                                
+                                                {/* Campo oculto para mantener la ruta de la foto actual */}
+                                                <input 
+                                                    type="hidden" 
+                                                    name="profile_photo_path" 
+                                                    value={data.profile_photo_path || ''}
+                                                />
                                             </Grid>
                                         </Box>
                                     </Fade>
