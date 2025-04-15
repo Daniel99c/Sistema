@@ -1,5 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
+import { LoaderCircle,Eye, EyeOff } from 'lucide-react';
 import { FormEventHandler, useState, useEffect } from 'react';
 
 import InputError from '@/components/input-error';
@@ -162,6 +162,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                         required
                                         className="bg-gray-900 text-white placeholder:text-gray-400"
                                     />
+                                      
                                     <InputError message={errors.password} className="text-red-500" />
                                 </div>
 
