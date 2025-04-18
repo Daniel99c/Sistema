@@ -9,7 +9,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { UserRound, Building2, BookMarked, GraduationCap, UsersRound, Folder, LayoutDashboard, Newspaper, MapPinned } from 'lucide-react';
+import { FileStack,UserRound, Building2, BookMarked, GraduationCap, UsersRound, Folder, LayoutDashboard, Newspaper, MapPinned } from 'lucide-react';
 
 import AppLogo from './app-logo';
 import { PageProps as InertiaPageProps } from '@inertiajs/core';
@@ -48,6 +48,8 @@ export function AppSidebar() {
             { title: 'My Profile', href: '/myProfile', icon: UserRound },
             { title: 'News', href: '/news', icon: Newspaper },
             { title: 'Ubications', href: '/map', icon: MapPinned },
+            
+
 
         ],
         Egresado: [
