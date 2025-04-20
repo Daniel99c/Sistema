@@ -7,10 +7,11 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\BasicInformationController;
 use App\Http\Controllers\AcademicInformationController;
 use App\Http\Controllers\EmploymentInformationController;
-use App\Http\Controllers\ProfileController; // Añadir esta línea
+use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RoleAccessMiddleware;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\GraduateReportsController;
 
 // Redirigir rutas de Administrador y Coordinador directamente al login
 Route::get('Administrador', function () {
@@ -79,23 +80,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/{id}', [NewsController::class, 'destroy'])->name('destroy');
     });
 
+    // Rutas para reportes de egresados (sin middleware específico aquí)
+    // El control de acceso se maneja en el RoleAccessMiddleware
+    Route::get('/graduateReports', [GraduateReportsController::class, 'index'])->name('graduateReports');
+    Route::get('/graduateReports/export', [GraduateReportsController::class, 'export'])->name('graduateReports.export');
+
     // INICIO - RUTAS PARA EL SISTEMA DE UBICACIONES
     
     // Ruta para guardar la ubicación (solo para egresados)
-    Route::post('/location', [LocationController::class, 'store'])
-        ->middleware('role:Egresado'); // Ajusta el nombre del middleware según tu implementación
+    // El control de acceso se maneja en el RoleAccessMiddleware
+    Route::post('/location', [LocationController::class, 'store'])->name('location.store');
     
     // Ruta para obtener la ubicación del usuario actual
-    Route::get('/user/location', [LocationController::class, 'getUserLocation']);
+    Route::get('/user/location', [LocationController::class, 'getUserLocation'])->name('user.location');
     
     // Ruta para obtener todas las ubicaciones (solo para coordinadores)
-    Route::get('/locations', [LocationController::class, 'index'])
-        ->middleware('role:Coordinador'); // Ajusta el nombre del middleware según tu implementación
+    // El control de acceso se maneja en el RoleAccessMiddleware
+    Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 
     // Ruta para la vista del mapa (solo para coordinadores)
+    // El control de acceso se maneja en el RoleAccessMiddleware
     Route::get('/map', function () {
         return Inertia::render('MapView');
-    })->middleware('role:Coordinador'); // Ajusta el nombre del middleware según tu implementación
+    })->name('map');
     
     // FIN - RUTAS PARA EL SISTEMA DE UBICACIONES
     
@@ -105,9 +112,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('news/{id}', [NewsController::class, 'show']);
         Route::get('academicInformation', [AcademicInformationController::class, 'getAll']);
         
-        // API para ubicaciones (opcional si quieres mantener separada la API)
-        Route::get('locations', [LocationController::class, 'getLocationsApi'])
-            ->middleware('role:Coordinador');
+        // API para ubicaciones
+        Route::get('locations', [LocationController::class, 'getLocationsApi']);
+    });
+    
+    // Ruta de prueba simple para depuración
+    Route::get('/test-report', function() {
+        return 'Prueba de ruta correcta - Si puedes ver esto, las rutas funcionan';
     });
 });
 

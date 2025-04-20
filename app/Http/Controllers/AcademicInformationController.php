@@ -52,7 +52,7 @@ class AcademicInformationController extends Controller
             if ($request->input('type') === 'formal') {
                 $validated = $request->validate([
                     'type' => 'required|in:formal',
-                    'level' => 'required|in:pregrado,especialización,maestría,doctorado',
+                    'level' => 'required|in:educación superior,pregrado,especialización,maestría,doctorado',
                     'program_name' => 'required|string|max:255',
                     'custom_program_name' => 'nullable|string|max:255',
                     'institution' => 'required|string|max:255',
@@ -116,7 +116,7 @@ class AcademicInformationController extends Controller
             // Validar datos según el tipo de registro (formal o curso)
             if ($request->input('type') === 'formal') {
                 $validated = $request->validate([
-                    'level' => 'required|in:pregrado,especialización,maestría,doctorado',
+                    'level' => 'required|in:educación superior,pregrado,especialización,maestría,doctorado',
                     'program_name' => 'required|string|max:255',
                     'custom_program_name' => 'nullable|string|max:255',
                     'institution' => 'required|string|max:255',
@@ -375,7 +375,7 @@ class AcademicInformationController extends Controller
             'Agronomía',
             'Medicina Veterinaria',
             'Comercio Internacional',
-            'Otro', // Opción para programas personalizados
+            'Otro',
         ];
     }
 }

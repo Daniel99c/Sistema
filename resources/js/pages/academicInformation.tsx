@@ -120,7 +120,7 @@ const darkTheme = createTheme({
 interface AcademicRecord {
     id?: number;
     type: 'formal' | 'course';
-    level?: 'pregrado' | 'especialización' | 'maestría' | 'doctorado' | null;
+    level?: 'educación superior' | 'pregrado' | 'especialización' | 'maestría' | 'doctorado' | null;
     program_name: string;
     custom_program_name?: string | null; // Campo para programas personalizados
     institution: string;
@@ -153,7 +153,7 @@ export default function AcademicInformation({ formalEducation, courses, institut
 
     // Estados para el formulario de educación formal
     const [formalType, setFormalType] = useState<'formal'>('formal');
-    const [formalLevel, setFormalLevel] = useState<'pregrado' | 'especialización' | 'maestría' | 'doctorado'>('pregrado');
+    const [formalLevel, setFormalLevel] = useState<'educación superior' | 'pregrado' | 'especialización' | 'maestría' | 'doctorado'>('pregrado');
     const [formalProgramName, setFormalProgramName] = useState('');
     const [formalCustomProgramName, setFormalCustomProgramName] = useState('');
     const [formalInstitution, setFormalInstitution] = useState('');
@@ -232,8 +232,8 @@ export default function AcademicInformation({ formalEducation, courses, institut
                 setFormalType('formal');
 
                 // Manejo cuidadoso del nivel
-                if (record.level && ['pregrado', 'especialización', 'maestría', 'doctorado'].includes(record.level)) {
-                    setFormalLevel(record.level as 'pregrado' | 'especialización' | 'maestría' | 'doctorado');
+                if (record.level && ['educación superior', 'pregrado', 'especialización', 'maestría', 'doctorado'].includes(record.level)) {
+                    setFormalLevel(record.level as 'educación superior' | 'pregrado' | 'especialización' | 'maestría' | 'doctorado');
                 }
 
                 // Manejo correcto del programa
@@ -1137,10 +1137,11 @@ export default function AcademicInformation({ formalEducation, courses, institut
                                             <Select
                                                 labelId="level-label"
                                                 value={formalLevel}
-                                                onChange={(e) => setFormalLevel(e.target.value as 'pregrado' | 'especialización' | 'maestría' | 'doctorado')}
+                                                onChange={(e: any) => setFormalLevel(e.target.value)}
                                                 label="Nivel de Formación"
                                                 error={!!formalErrors.level}
                                             >
+                                                <MenuItem value="educación superior">Educación Superior</MenuItem>
                                                 <MenuItem value="pregrado">Pregrado</MenuItem>
                                                 <MenuItem value="especialización">Especialización</MenuItem>
                                                 <MenuItem value="maestría">Maestría</MenuItem>
@@ -1175,7 +1176,6 @@ export default function AcademicInformation({ formalEducation, courses, institut
                                                         {program}
                                                     </MenuItem>
                                                 ))}
-                                                <MenuItem value="Otro">Otro</MenuItem>
                                             </Select>
                                             {formalErrors.program_name && (
                                                 <Typography variant="caption" color="error">
@@ -1374,7 +1374,6 @@ export default function AcademicInformation({ formalEducation, courses, institut
                                                         {program}
                                                     </MenuItem>
                                                 ))}
-                                                <MenuItem value="Otro">Otro</MenuItem>
                                             </Select>
                                             {courseErrors.program_name && (
                                                 <Typography variant="caption" color="error">
@@ -1444,7 +1443,6 @@ export default function AcademicInformation({ formalEducation, courses, institut
                                     )}
 
                                     <Grid item xs={12}>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}></LocalizationProvider>
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                             <DatePicker
                                                 label="Fecha de Finalización"

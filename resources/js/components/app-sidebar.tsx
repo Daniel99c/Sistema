@@ -42,12 +42,14 @@ export function AppSidebar() {
             { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
             { title: 'My Profile', href: '/myProfile', icon: UserRound },
             { title: 'Users', href: '/users', icon: UsersRound },
+            { title: 'Graduate Reports', href: '/graduateReports', icon: FileStack},
         ],
         Coordinador: [
             { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
             { title: 'My Profile', href: '/myProfile', icon: UserRound },
             { title: 'News', href: '/news', icon: Newspaper },
             { title: 'Ubications', href: '/map', icon: MapPinned },
+            { title: 'Graduate Reports', href: '/graduateReports', icon: FileStack},
             
 
 
