@@ -1,153 +1,113 @@
-# 🎓 Sistema de Gestión de Egresados
+# Sistema de Gestión de Egresados 🎓
 
-## 📖 Descripción General
+## Descripción General
 
-El **Sistema de Gestión de Egresados** es una aplicación web desarrollada para la **Universidad Mariana**, orientada a la administración, seguimiento y actualización de la información de los egresados.
+Sistema web desarrollado para la **Universidad Mariana**, orientado a la gestión, seguimiento y actualización de la información de los egresados.  
+Permite centralizar datos personales, académicos y laborales, facilitando la generación de reportes y el apoyo a la toma de decisiones institucionales.
 
-El sistema permite centralizar datos personales, académicos y laborales, facilitando el seguimiento profesional y apoyando la toma de decisiones institucionales mediante reportes y consultas.
-
-El proyecto fue desarrollado como un **sistema unificado en Laravel**, integrando el frontend mediante **React Starter Kit**, y utilizando una base de datos **MySQL**.
-
----
-
-## 🛠️ Tecnologías Utilizadas
-
-- **Laravel (PHP)**
-- **React (React Starter Kit)**
-- **PHP 8.1**
-- **JavaScript**
-- **MySQL**
-- **Node.js**
-- **NPM**
-- **Git**
+El sistema fue desarrollado como un **proyecto unificado en Laravel**, integrando el frontend mediante **React Starter Kit**, y utilizando **MySQL** como gestor de base de datos.
 
 ---
 
-## 🔐 Autenticación y Roles del Sistema
+## Funcionalidades Principales
 
-El sistema cuenta con control de acceso basado en roles:
-
-- **Administrador:** gestión completa del sistema y usuarios.
-- **Coordinador:** consulta y generación de reportes.
-- **Egresado:** actualización y consulta de su información personal.
-
----
-
-## 📚 Funcionalidades Principales
+### 🔐 Autenticación y Gestión de Usuarios
+- Registro e inicio de sesión seguro
+- Control de acceso basado en roles
+- Gestión de permisos por tipo de usuario
 
 ### 👤 Gestión de Egresados
-- Registro y actualización de datos personales
-- Gestión de información académica
+- Registro y actualización de información personal
+- Gestión de datos académicos
 - Registro de información laboral
-- Gestión de habilidades y experiencia profesional
+- Gestión de habilidades blandas y duras
 
 ### 📊 Reportes
 - Consulta general de egresados
-- Generación de reportes institucionales
-- Exportación de información
+- Reportes por información académica y laboral
+- Exportación de reportes en PDF y TXT
+
+### 🧭 Seguimiento Institucional
+- Actualización periódica de información
+- Visualización consolidada de datos
+- Apoyo a procesos administrativos y académicos
 
 ---
 
-## ⚙️ Requisitos del Sistema
+## Tecnologías Utilizadas
 
-Antes de instalar el sistema, el servidor o equipo debe contar con:
+### Frontend
+- React.js (React Starter Kit)
+- TypeScript
+- Tailwind CSS
+- Inertia.js
 
-- PHP >= 8.1  
-- Composer  
-- Node.js >= 18  
-- NPM (incluido con Node.js)  
-- MySQL >= 8.0  
-- Servidor web (Apache o Nginx)  
-- Navegador web actualizado  
+### Backend
+- Laravel (PHP)
+- MySQL
+
+### Herramientas de Desarrollo
+- Node.js
+- NPM
+- Composer
+- Vite.js
+- Git
 
 ---
 
-## 📥 Obtención del Proyecto
+## Requisitos de Instalación
 
-El proyecto puede obtenerse de dos formas:
+### Requisitos Previos
+- PHP >= 8.1
+- Node.js >= 18
+- NPM
+- Composer
+- MySQL >= 8.0
+- Servidor web (Apache o Nginx)
 
-### 🔹 Clonación desde GitHub
+---
 
+## Instalación y Configuración
 
-git clone https://github.com/TU-USUARIO/sistema-egresados.git
-🔹 Descarga en archivo comprimido
-Acceder al repositorio del proyecto en GitHub
+### Clonar el Repositorio
 
-Seleccionar Code → Download ZIP
+```bash
+git clone https://github.com/Daniel99c/gestion-egresados.git
+cd gestion-egresados
 
-Descomprimir el archivo en el equipo o servidor
-
-🚀 Instalación del Sistema
-
-🧩 Todos los comandos se ejecutan en la raíz del proyecto
-
-🟦 1️⃣ Instalación de Dependencias
-
-📌 Backend + Frontend
-
+Instalar Dependencias
+Backend (Laravel)
 composer install
+
+Frontend (React)
 npm install
 
-
-⚠️ Este paso instala todas las dependencias necesarias para Laravel y React.
-
-🟦 2️⃣ Configuración del Entorno
-🛠️ Archivo de configuración
+Configurar el Entorno
 cp .env.example .env
-
-🗄️ Configuración de Base de Datos (.env)
-DB_DATABASE=egresados
-DB_USERNAME=usuario
-DB_PASSWORD=contraseña
-
-🔐 Generar clave de la aplicación
 php artisan key:generate
 
-🟦 3️⃣ Base de Datos
+Configurar la Base de Datos
 
-🧱 Crear base de datos y ejecutar migraciones
+Crear la base de datos en MySQL
+
+Configurar credenciales en el archivo .env
 
 php artisan migrate
 
-🟦 4️⃣ Ejecución del Sistema
-🎨 Compilar Frontend (React)
+Compilar Assets
 npm run dev
 
-⚙️ Ejecutar Backend (Laravel)
+Iniciar el Servidor
 php artisan serve
 
-
-📍 El sistema quedará disponible desde el navegador web.
-
-🗂️ Estructura del Proyecto
-
-🏗️ Arquitectura Unificada
-
-Laravel
- ├─ Rutas
- ├─ Autenticación
- ├─ Lógica de negocio
- ├─ Seguridad
- └─ Base de datos
-
-React
- ├─ Interfaz gráfica
- ├─ Componentes
- └─ Navegación dinámica
-
-✅ Estado del Sistema
-
-🟢 Sistema operativo
-
-El sistema se encuentra desarrollado, configurado y listo para su despliegue, siendo utilizado para la gestión institucional de egresados.
-
-📦 Entrega del Proyecto
-
-📁 Contenido entregable
-
-✔ Sistema funcional
-✔ Código fuente completo
-✔ Base de datos
-✔ Manual técnico
-✔ Manual de usuario
-✔ Video de instalación y uso
+Estructura del Proyecto
+gestion-egresados/
+├── app/                  # Lógica de la aplicación
+├── resources/
+│   ├── js/              # Componentes React
+│   │   ├── pages/       # Páginas del sistema
+│   │   └── components/  # Componentes reutilizables
+│   └── views/           # Vistas Blade
+├── routes/              # Definición de rutas
+├── database/            # Migraciones y seeders
+└── public/              # Archivos públicos
