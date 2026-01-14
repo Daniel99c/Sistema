@@ -1,189 +1,118 @@
-Documentación Técnica
-Sistema de Gestión de Egresados
+# 🎓 Sistema de Gestión de Egresados
 
-Universidad Mariana
+## 📖 Descripción General
 
-1. Descripción general del sistema
+El **Sistema de Gestión de Egresados** es una aplicación web desarrollada para la **Universidad Mariana**, orientada a la administración, seguimiento y actualización de la información de sus egresados.
 
-El Sistema de Gestión de Egresados es una aplicación web desarrollada con el propósito de facilitar la administración, seguimiento y consulta de la información de los egresados de la Universidad Mariana, permitiendo centralizar datos académicos, laborales y de contacto en un solo sistema.
+El sistema permite centralizar datos personales, académicos y laborales, facilitando el seguimiento profesional de los egresados y apoyando la toma de decisiones institucionales mediante reportes y consultas.
 
-El sistema permite a la institución mantener actualizada la información de sus egresados, apoyar procesos de seguimiento profesional y generar reportes que contribuyen a la toma de decisiones institucionales.
+El proyecto fue desarrollado como un **sistema unificado en Laravel**, integrando el frontend mediante **React Starter Kit**, y utilizando una base de datos **MySQL**.
 
-El proyecto fue desarrollado como un sistema web unificado en Laravel, integrando el frontend mediante React, lo que permite una interacción dinámica y una experiencia de usuario moderna.
+---
 
-Actualmente, el sistema se encuentra implementado y funcional, listo para ser desplegado en el entorno institucional.
+## 🛠️ Tecnologías Utilizadas
 
-2. Tecnologías utilizadas
+- **Laravel (PHP)**
+- **React (React Starter Kit)**
+- **PHP 8.1**
+- **JavaScript**
+- **MySQL**
+- **Node.js**
+- **NPM**
+- **Git**
 
-Laravel (PHP)
+---
 
-React (integrado en Laravel)
+## 🔐 Autenticación y Gestión de Usuarios
 
-PHP 8.1
+- Inicio de sesión seguro
+- Gestión de roles y permisos
+- Control de acceso según el rol del usuario
 
-JavaScript
+**Roles del sistema:**
+- Administrador
+- Coordinador
+- Egresado
 
-MySQL
+---
 
-Node.js
+## 📚 Gestión de Información del Egresado
 
-NPM
+- Registro y actualización de datos personales
+- Información académica del egresado
+- Registro de información laboral
+- Gestión de habilidades y experiencia profesional
 
-Git
+---
 
-3. Requisitos del sistema
-3.1 Requisitos previos obligatorios
+## 📊 Reportes y Consultas
 
-Antes de instalar el sistema, el servidor o equipo debe contar con:
+- Consulta de información general de egresados
+- Generación de reportes por parte del coordinador
+- Exportación de reportes en formatos digitales
 
-PHP >= 8.1
+---
 
-Composer
+## ⚙️ Requisitos del Sistema
 
-Node.js >= 18
+- PHP >= 8.1
+- Composer
+- Node.js >= 18
+- NPM
+- MySQL >= 8.0
+- Servidor web (Apache o Nginx)
+- Navegador web actualizado
 
-NPM (incluido con Node.js)
+---
 
-MySQL >= 8.0
+## 🚀 Instalación del Proyecto
 
-Servidor web (Apache o Nginx)
+### 1️⃣ Clonar el repositorio
 
-Navegador web actualizado
+```bash
+git clone https://github.com/TU-USUARIO/sistema-egresados.git
+O descargar el proyecto en formato .zip desde GitHub.
 
-4. Instalación de Node.js y NPM
-4.1 Descarga de Node.js
-
-Acceder al sitio oficial de Node.js.
-
-Descargar la versión LTS (Long Term Support).
-
-Ejecutar el instalador y completar el proceso de instalación.
-
-📌 Node.js incluye automáticamente NPM, por lo que no es necesario instalar NPM por separado.
-
-4.2 Verificación de la instalación
-
-Desde la terminal ejecutar:
-
-node -v
-npm -v
-
-
-Si ambos comandos retornan una versión, la instalación es correcta.
-
-5. Descarga del sistema
-
-El sistema puede obtenerse de dos formas:
-
-5.1 Clonación del repositorio
-git clone https://github.com/USUARIO/sistema-egresados.git
-
-5.2 Descarga en archivo comprimido
-
-Acceder al repositorio del proyecto.
-
-Seleccionar Code → Download ZIP.
-
-Descomprimir el archivo en el servidor o equipo local.
-
-6. Instalación del sistema
-6.1 Instalación de dependencias del proyecto
-
+2️⃣ Instalación de dependencias
 Ubicarse en la carpeta raíz del proyecto y ejecutar:
 
-Instalación de dependencias backend:
-
+bash
+Copiar código
 composer install
-
-
-Instalación de dependencias frontend (React):
-
 npm install
-
-
-⚠️ Este paso es obligatorio para que la interfaz del sistema funcione correctamente.
-
-7. Configuración del entorno
-
-Copiar el archivo de entorno:
-
+3️⃣ Configuración del entorno
+bash
+Copiar código
 cp .env.example .env
-
-
-Configurar la base de datos en el archivo .env:
-
-DB_DATABASE=egresados
-DB_USERNAME=usuario
-DB_PASSWORD=contraseña
-
-
-Generar la clave de la aplicación:
-
 php artisan key:generate
+Configurar la base de datos en el archivo .env.
 
-8. Base de datos
-
-Crear la base de datos en MySQL.
-
-Ejecutar las migraciones:
-
+4️⃣ Migraciones de base de datos
+bash
+Copiar código
 php artisan migrate
+5️⃣ Ejecución del sistema
+Compilar el frontend:
 
-9. Ejecución del sistema
-9.1 Compilación del frontend
+bash
+Copiar código
 npm run dev
+Ejecutar el backend:
 
-
-Este comando compila los componentes React integrados en Laravel.
-
-9.2 Ejecución del backend
+bash
+Copiar código
 php artisan serve
+El sistema estará disponible desde el navegador web.
 
+🗂️ Estructura del Sistema
+Laravel: lógica de negocio, seguridad, autenticación y base de datos
 
-El sistema quedará disponible desde el navegador web.
+React: interfaz gráfica, componentes y navegación dinámica
 
-10. Estructura del sistema
+✅ Estado del Sistema
+El sistema se encuentra desarrollado, configurado y listo para su despliegue, permitiendo la gestión eficiente de la información de los egresados de la Universidad Mariana.
 
-El sistema mantiene una estructura unificada, donde:
-
-Laravel gestiona:
-
-Rutas
-
-Autenticación
-
-Seguridad
-
-Lógica de negocio
-
-Acceso a la base de datos
-
-React gestiona:
-
-Interfaz gráfica
-
-Componentes
-
-Navegación dinámica
-
-Interacción con el backend
-
-11. Roles del sistema
-
-Administrador: Gestión total del sistema y usuarios.
-
-Coordinador: Consulta y generación de reportes.
-
-Egresado: Actualización y consulta de su información personal.
-
-12. Estado del sistema
-
-El sistema se encuentra instalado, configurado y listo para su despliegue, permitiendo la gestión eficiente de la información de los egresados de la Universidad Mariana.
-
-13. Entrega del proyecto
-
-El proyecto se entrega con:
-
+📦 Entrega del Proyecto
 Sistema funcional
 
 Código fuente completo
