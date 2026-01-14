@@ -155,25 +155,4 @@ gestionEgresados/
 └── public/            # Archivos públicos
 ```
 
-## Contribución
-
-1. Crear un fork del repositorio
-2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit de los cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
-
-## Autoría
-
-Desarrollado por el equipo de estudiantes de Ingeniería de Sistemas de la Universidad Mariana.
-
-**Docente**: Sandro Fabian Parra Pay
-
-**Universidad Mariana**  
-Facultad de Ingeniería  
-Programa de Ingeniería de Sistemas  
-San Juan de Pasto - 2025
-
-## Licencia
-
 Este proyecto está bajo la Licencia MIT - ver el archivo **LICENSE.md** para más detalles.
