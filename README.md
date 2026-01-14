@@ -1,87 +1,94 @@
-Sistema de Gestión de Egresados - Universidad Mariana 🎓
-Descripción General
+# Sistema de Gestión de Egresados - Universidad Mariana 🎓
+
+## Descripción General
+
 Sistema web para la gestión y seguimiento de egresados del programa de Ingeniería de Sistemas de la Universidad Mariana. Permite administrar información personal, académica y laboral de los egresados, facilitando la comunicación institucional, el análisis de empleabilidad y la visualización geográfica de la comunidad de exalumnos.
-Funcionalidades Principales
-🔐 Autenticación y Gestión de Usuarios
 
-Registro e inicio de sesión seguro
-Recuperación de contraseña por correo electrónico
-Sistema de roles diferenciados (Egresado, Coordinador, Administrador)
-Panel de administración personalizado por rol
+## Funcionalidades Principales
 
-👤 Gestión de Perfiles de Egresados
+### 🔐 Autenticación y Gestión de Usuarios
 
-Registro y actualización de información personal
-Gestión de información de contacto y ubicación
-Barra de progreso de completitud de perfil
-Validación de campos obligatorios
+- Registro e inicio de sesión seguro
+- Recuperación de contraseña por correo electrónico
+- Sistema de roles diferenciados (Egresado, Coordinador, Administrador)
+- Panel de administración personalizado por rol
 
-📚 Historial Académico
+### 👤 Gestión de Perfiles de Egresados
 
-Registro de formación académica (pregrado, posgrado, cursos)
-Gestión de títulos obtenidos
-Biblioteca de certificados digitales
-Validación de coherencia temporal
+- Registro y actualización de información personal
+- Gestión de información de contacto y ubicación
+- Barra de progreso de completitud de perfil
+- Validación de campos obligatorios
 
-💼 Experiencia Laboral
+### 📚 Historial Académico
 
-Registro de historial laboral completo
-Información de empresas, cargos y funciones
-Modalidad de trabajo (presencial, remoto, híbrido)
-Vista en tabla y tarjetas
+- Registro de formación académica (pregrado, posgrado, cursos)
+- Gestión de títulos obtenidos
+- Biblioteca de certificados digitales
+- Validación de coherencia temporal
 
-🗺️ Visualización Geográfica
+### 💼 Experiencia Laboral
 
-Mapa interactivo de distribución de egresados
-Marcadores con información básica del egresado
-Filtros por año de graduación y sector laboral
-Identificación de concentraciones geográficas
+- Registro de historial laboral completo
+- Información de empresas, cargos y funciones
+- Modalidad de trabajo (presencial, remoto, híbrido)
+- Vista en tabla y tarjetas
 
-📰 Sistema de Noticias
+### 🗺️ Visualización Geográfica
 
-Creación, edición y eliminación de noticias (Coordinadores)
-Visualización de noticias universitarias
-Ordenamiento cronológico automático
-Sección de "Últimas Noticias" en dashboard
+- Mapa interactivo de distribución de egresados
+- Marcadores con información básica del egresado
+- Filtros por año de graduación y sector laboral
+- Identificación de concentraciones geográficas
 
-📊 Reportes y Estadísticas
+### 📰 Sistema de Noticias
 
-Generación de reportes detallados con filtros
-Estadísticas de empleabilidad
-Distribución por género y ubicación
-Exportación en formato PDF y Excel
+- Creación, edición y eliminación de noticias (Coordinadores)
+- Visualización de noticias universitarias
+- Ordenamiento cronológico automático
+- Sección de "Últimas Noticias" en dashboard
 
-Tecnologías Utilizadas
-Frontend
+### 📊 Reportes y Estadísticas
 
-React.js con Inertia.js
-Tailwind CSS para estilos
-Lucide React para iconos
-Shadcn/UI para componentes
+- Generación de reportes detallados con filtros
+- Estadísticas de empleabilidad
+- Distribución por género y ubicación
+- Exportación en formato PDF y Excel
 
-Backend
+## Tecnologías Utilizadas
 
-Laravel 11 (PHP)
-MySQL para base de datos
-API RESTful
+### Frontend
 
-Herramientas de Desarrollo
+- React.js con Inertia.js
+- Tailwind CSS para estilos
+- Lucide React para iconos
+- Shadcn/UI para componentes
 
-Vite.js
-ESLint
-Prettier
-PHP CS Fixer
+### Backend
 
-Requisitos de Instalación
-Requisitos Previos
+- Laravel 11 (PHP)
+- MySQL para base de datos
+- API RESTful
 
-PHP >= 8.0
-Node.js >= 16.0
-Composer
-MySQL
+### Herramientas de Desarrollo
 
-Dependencias Principales
-json{
+- Vite.js
+- ESLint
+- Prettier
+- PHP CS Fixer
+
+## Requisitos de Instalación
+
+### Requisitos Previos
+
+- PHP >= 8.0
+- Node.js >= 16.0
+- Composer
+- MySQL
+
+### Dependencias Principales
+```json
+{
   "dependencies": {
     "@inertiajs/react": "^1.0.0",
     "react": "^18.0.0",
@@ -90,27 +97,48 @@ json{
     "tailwindcss": "^3.x.x"
   }
 }
-Instalación y Configuración
-1. Clonar el Repositorio
-bashgit clone https://github.com/Daniel99c/gestionEgresados.git
+```
+
+## Instalación y Configuración
+
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/Daniel99c/gestionEgresados.git
 cd gestionEgresados
-2. Instalar Dependencias de PHP
-bashcomposer install
-3. Instalar Dependencias de Node.js
-bashnpm install
-4. Configurar el Entorno
-bashcp .env.example .env
+```
+
+### 2. Instalar Dependencias de PHP
+```bash
+composer install
+```
+
+### 3. Instalar Dependencias de Node.js
+```bash
+npm install
+```
+
+### 4. Configurar el Entorno
+```bash
+cp .env.example .env
 php artisan key:generate
-5. Configurar la Base de Datos
+```
 
-Crear base de datos MySQL
-Actualizar credenciales en .env
+### 5. Configurar la Base de Datos
 
-bashphp artisan migrate
-6. Compilar Assets
-bashnpm run dev
-7. Iniciar el Servidor
-bashphp artisan serve
+- Crear base de datos MySQL
+- Actualizar credenciales en .env
+```bash
+php artisan migrate
+```
+
+### 6. Compilar Assets
+```bash
+npm run dev
+```
+
+### 7. Iniciar el Servidor
+```bash
+php artisan serve
 ```
 
 ## Estructura del Proyecto
@@ -125,20 +153,27 @@ gestionEgresados/
 ├── routes/             # Definición de rutas
 ├── database/          # Migraciones y seeders
 └── public/            # Archivos públicos
-Contribución
+```
 
-Crear un fork del repositorio
-Crear una rama para tu feature (git checkout -b feature/AmazingFeature)
-Commit de los cambios (git commit -m 'Add some AmazingFeature')
-Push a la rama (git push origin feature/AmazingFeature)
-Abrir un Pull Request
+## Contribución
 
-Autoría
+1. Crear un fork del repositorio
+2. Crear una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit de los cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abrir un Pull Request
+
+## Autoría
+
 Desarrollado por el equipo de estudiantes de Ingeniería de Sistemas de la Universidad Mariana.
-Docente: Sandro Fabian Parra Pay
-Universidad Mariana
-Facultad de Ingeniería
-Programa de Ingeniería de Sistemas
+
+**Docente**: Sandro Fabian Parra Pay
+
+**Universidad Mariana**  
+Facultad de Ingeniería  
+Programa de Ingeniería de Sistemas  
 San Juan de Pasto - 2025
-Licencia
-Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE.md para más detalles.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo **LICENSE.md** para más detalles.
