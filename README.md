@@ -78,73 +78,76 @@ Seleccionar Code → Download ZIP
 Descomprimir el archivo en el equipo o servidor
 
 🚀 Instalación del Sistema
-1️⃣ Instalación de dependencias
-Ubicarse en la carpeta raíz del proyecto y ejecutar:
 
-bash
-Copiar código
+🧩 Todos los comandos se ejecutan en la raíz del proyecto
+
+🟦 1️⃣ Instalación de Dependencias
+
+📌 Backend + Frontend
+
 composer install
 npm install
-Este paso instala todas las dependencias necesarias tanto del backend como del frontend.
 
-2️⃣ Configuración del entorno
-Copiar el archivo de configuración:
 
-bash
-Copiar código
+⚠️ Este paso instala todas las dependencias necesarias para Laravel y React.
+
+🟦 2️⃣ Configuración del Entorno
+🛠️ Archivo de configuración
 cp .env.example .env
-Configurar las credenciales de la base de datos en el archivo .env:
 
-env
-Copiar código
+🗄️ Configuración de Base de Datos (.env)
 DB_DATABASE=egresados
 DB_USERNAME=usuario
 DB_PASSWORD=contraseña
-Generar la clave de la aplicación:
 
-bash
-Copiar código
+🔐 Generar clave de la aplicación
 php artisan key:generate
-3️⃣ Base de Datos
-Crear la base de datos en MySQL y ejecutar las migraciones:
 
-bash
-Copiar código
+🟦 3️⃣ Base de Datos
+
+🧱 Crear base de datos y ejecutar migraciones
+
 php artisan migrate
-4️⃣ Ejecución del Sistema
-Compilar el frontend (React):
 
-bash
-Copiar código
+🟦 4️⃣ Ejecución del Sistema
+🎨 Compilar Frontend (React)
 npm run dev
-Ejecutar el backend (Laravel):
 
-bash
-Copiar código
+⚙️ Ejecutar Backend (Laravel)
 php artisan serve
-El sistema quedará disponible desde el navegador web.
+
+
+📍 El sistema quedará disponible desde el navegador web.
 
 🗂️ Estructura del Proyecto
-El sistema utiliza una estructura unificada, donde:
 
-Laravel gestiona la lógica de negocio, seguridad, autenticación y base de datos.
+🏗️ Arquitectura Unificada
 
-React gestiona la interfaz gráfica, componentes y navegación dinámica.
+Laravel
+ ├─ Rutas
+ ├─ Autenticación
+ ├─ Lógica de negocio
+ ├─ Seguridad
+ └─ Base de datos
+
+React
+ ├─ Interfaz gráfica
+ ├─ Componentes
+ └─ Navegación dinámica
 
 ✅ Estado del Sistema
-El sistema se encuentra desarrollado, configurado y listo para su despliegue, permitiendo la gestión eficiente de la información de los egresados de la Universidad Mariana.
+
+🟢 Sistema operativo
+
+El sistema se encuentra desarrollado, configurado y listo para su despliegue, siendo utilizado para la gestión institucional de egresados.
 
 📦 Entrega del Proyecto
-El proyecto incluye:
 
-Sistema funcional
+📁 Contenido entregable
 
-Código fuente completo
-
-Base de datos
-
-Manual técnico
-
-Manual de usuario
-
-Video de instalación y uso
+✔ Sistema funcional
+✔ Código fuente completo
+✔ Base de datos
+✔ Manual técnico
+✔ Manual de usuario
+✔ Video de instalación y uso
