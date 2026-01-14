@@ -1,113 +1,144 @@
-# Sistema de Gestión de Egresados 🎓
+Sistema de Gestión de Egresados - Universidad Mariana 🎓
+Descripción General
+Sistema web para la gestión y seguimiento de egresados del programa de Ingeniería de Sistemas de la Universidad Mariana. Permite administrar información personal, académica y laboral de los egresados, facilitando la comunicación institucional, el análisis de empleabilidad y la visualización geográfica de la comunidad de exalumnos.
+Funcionalidades Principales
+🔐 Autenticación y Gestión de Usuarios
 
-## Descripción General
+Registro e inicio de sesión seguro
+Recuperación de contraseña por correo electrónico
+Sistema de roles diferenciados (Egresado, Coordinador, Administrador)
+Panel de administración personalizado por rol
 
-Sistema web desarrollado para la **Universidad Mariana**, orientado a la gestión, seguimiento y actualización de la información de los egresados.  
-Permite centralizar datos personales, académicos y laborales, facilitando la generación de reportes y el apoyo a la toma de decisiones institucionales.
+👤 Gestión de Perfiles de Egresados
 
-El sistema fue desarrollado como un **proyecto unificado en Laravel**, integrando el frontend mediante **React Starter Kit**, y utilizando **MySQL** como gestor de base de datos.
+Registro y actualización de información personal
+Gestión de información de contacto y ubicación
+Barra de progreso de completitud de perfil
+Validación de campos obligatorios
 
----
+📚 Historial Académico
 
-## Funcionalidades Principales
+Registro de formación académica (pregrado, posgrado, cursos)
+Gestión de títulos obtenidos
+Biblioteca de certificados digitales
+Validación de coherencia temporal
 
-### 🔐 Autenticación y Gestión de Usuarios
-- Registro e inicio de sesión seguro
-- Control de acceso basado en roles
-- Gestión de permisos por tipo de usuario
+💼 Experiencia Laboral
 
-### 👤 Gestión de Egresados
-- Registro y actualización de información personal
-- Gestión de datos académicos
-- Registro de información laboral
-- Gestión de habilidades blandas y duras
+Registro de historial laboral completo
+Información de empresas, cargos y funciones
+Modalidad de trabajo (presencial, remoto, híbrido)
+Vista en tabla y tarjetas
 
-### 📊 Reportes
-- Consulta general de egresados
-- Reportes por información académica y laboral
-- Exportación de reportes en PDF y TXT
+🗺️ Visualización Geográfica
 
-### 🧭 Seguimiento Institucional
-- Actualización periódica de información
-- Visualización consolidada de datos
-- Apoyo a procesos administrativos y académicos
+Mapa interactivo de distribución de egresados
+Marcadores con información básica del egresado
+Filtros por año de graduación y sector laboral
+Identificación de concentraciones geográficas
 
----
+📰 Sistema de Noticias
 
-## Tecnologías Utilizadas
+Creación, edición y eliminación de noticias (Coordinadores)
+Visualización de noticias universitarias
+Ordenamiento cronológico automático
+Sección de "Últimas Noticias" en dashboard
 
-### Frontend
-- React.js (React Starter Kit)
-- TypeScript
-- Tailwind CSS
-- Inertia.js
+📊 Reportes y Estadísticas
 
-### Backend
-- Laravel (PHP)
-- MySQL
+Generación de reportes detallados con filtros
+Estadísticas de empleabilidad
+Distribución por género y ubicación
+Exportación en formato PDF y Excel
 
-### Herramientas de Desarrollo
-- Node.js
-- NPM
-- Composer
-- Vite.js
-- Git
+Tecnologías Utilizadas
+Frontend
 
----
+React.js con Inertia.js
+Tailwind CSS para estilos
+Lucide React para iconos
+Shadcn/UI para componentes
 
-## Requisitos de Instalación
+Backend
 
-### Requisitos Previos
-- PHP >= 8.1
-- Node.js >= 18
-- NPM
-- Composer
-- MySQL >= 8.0
-- Servidor web (Apache o Nginx)
+Laravel 11 (PHP)
+MySQL para base de datos
+API RESTful
 
----
+Herramientas de Desarrollo
 
-## Instalación y Configuración
+Vite.js
+ESLint
+Prettier
+PHP CS Fixer
 
-### Clonar el Repositorio
+Requisitos de Instalación
+Requisitos Previos
 
-```bash
-git clone https://github.com/Daniel99c/gestion-egresados.git
-cd gestion-egresados
+PHP >= 8.0
+Node.js >= 16.0
+Composer
+MySQL
 
-Instalar Dependencias
-Backend (Laravel)
-composer install
-
-Frontend (React)
-npm install
-
-Configurar el Entorno
-cp .env.example .env
+Dependencias Principales
+json{
+  "dependencies": {
+    "@inertiajs/react": "^1.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "lucide-react": "^0.263.1",
+    "tailwindcss": "^3.x.x"
+  }
+}
+Instalación y Configuración
+1. Clonar el Repositorio
+bashgit clone https://github.com/Daniel99c/gestionEgresados.git
+cd gestionEgresados
+2. Instalar Dependencias de PHP
+bashcomposer install
+3. Instalar Dependencias de Node.js
+bashnpm install
+4. Configurar el Entorno
+bashcp .env.example .env
 php artisan key:generate
+5. Configurar la Base de Datos
 
-Configurar la Base de Datos
+Crear base de datos MySQL
+Actualizar credenciales en .env
 
-Crear la base de datos en MySQL
+bashphp artisan migrate
+6. Compilar Assets
+bashnpm run dev
+7. Iniciar el Servidor
+bashphp artisan serve
+```
 
-Configurar credenciales en el archivo .env
-
-php artisan migrate
-
-Compilar Assets
-npm run dev
-
-Iniciar el Servidor
-php artisan serve
-
-Estructura del Proyecto
-gestion-egresados/
-├── app/                  # Lógica de la aplicación
+## Estructura del Proyecto
+```
+gestionEgresados/
+├── app/                 # Lógica de la aplicación
 ├── resources/
-│   ├── js/              # Componentes React
-│   │   ├── pages/       # Páginas del sistema
-│   │   └── components/  # Componentes reutilizables
-│   └── views/           # Vistas Blade
-├── routes/              # Definición de rutas
-├── database/            # Migraciones y seeders
-└── public/              # Archivos públicos
+│   ├── js/             # Componentes React
+│   │   ├── Pages/      # Páginas de la aplicación
+│   │   └── Components/ # Componentes reutilizables
+│   └── views/          # Vistas blade
+├── routes/             # Definición de rutas
+├── database/          # Migraciones y seeders
+└── public/            # Archivos públicos
+Contribución
+
+Crear un fork del repositorio
+Crear una rama para tu feature (git checkout -b feature/AmazingFeature)
+Commit de los cambios (git commit -m 'Add some AmazingFeature')
+Push a la rama (git push origin feature/AmazingFeature)
+Abrir un Pull Request
+
+Autoría
+Desarrollado por el equipo de estudiantes de Ingeniería de Sistemas de la Universidad Mariana.
+Docente: Sandro Fabian Parra Pay
+Universidad Mariana
+Facultad de Ingeniería
+Programa de Ingeniería de Sistemas
+San Juan de Pasto - 2025
+Licencia
+Este proyecto está bajo la Licencia MIT - ver el archivo LICENSE.md para más detalles.
